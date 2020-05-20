@@ -30,14 +30,6 @@ def get_latest_repo_files(nexus_spec, repo_key):
     return {a['path']: a for a in get_assets(nexus_spec, repo_key)}
 
 
-def get_publish_data(artifact_base_uri, path, name):
-    content = read_file(path)
-    return {
-        'content': content,
-        'uri': f'{artifact_base_uri}/{name}'
-    }
-
-
 def upload(file_path, nexus_spec, repo_key, repo_path):
     url = f'{nexus_spec["url"]}/repository/{repo_key}/{repo_path}'
     logging.info('Uploading %s to %s', file_path, url)
