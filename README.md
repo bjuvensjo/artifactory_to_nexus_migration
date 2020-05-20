@@ -1,6 +1,6 @@
 # Artifactory to Nexus migration
 
-This script is used to migrate/copy artifacts from Artifactory repositories to Nexus repositories.
+This script is used to migrate/copy artifacts from Artifactory repositories to Nexus 3 repositories.
 
 The script copies only latest files, i.e. if Artifactory stores multiple versions of SNAPSHOT, 
 only the SNAPSHOT with the latest timestamp will be copied to Nexus.
