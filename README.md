@@ -18,7 +18,7 @@ it concurrently.
 
 ## Usage
 
-### Update config
+### Update config.py
 
     * artifactory_spec
     * nexus_spec
