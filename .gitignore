@@ -1,0 +1,17 @@
+.settings
+/.project
+.DS_Store
+.idea
+*.iml
+*.iws
+__pycache__
+**/*slask*
+README.html
+**/.pytest_cache
+**/.cache
+/build
+/dist
+**/*egg-info
+.coverage
+htmlcov/
+work_dir/
