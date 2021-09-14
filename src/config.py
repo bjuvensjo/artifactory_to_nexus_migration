@@ -1,4 +1,5 @@
 work_dir = './work_dir'
+dry = False
 
 artifactory_spec = {
     'url': '<artifactory_url, e.g. http://artifactory_host:9001>',

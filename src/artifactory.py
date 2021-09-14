@@ -39,6 +39,7 @@ def get_latest_repo_files(artifactory_spec, repo_key, excluded_uri_patterns=(r'.
             key = '/'.join([group_artifact_version, normalized_file_name])[1:]
             if key in latest_dict:
                 if is_later(basename(latest_dict[key]['uri']), file_name):
+                    logging.debug('Excluding %s for %s', latest_dict[key]['uri'], file_name)
                     latest_dict[key] = m
             else:
                 latest_dict[key] = m

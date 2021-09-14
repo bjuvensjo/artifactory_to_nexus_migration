@@ -16,6 +16,9 @@ the configured work_dir. After uploading the file is deleted.
 Downloading and uploading is done sequentially. The script could rather easily be modified to do 
 it concurrently. 
 
+The script supports running dry, i.e. only log information about what needs to be migrated without 
+actually downloading and uploading anything.
+
 ## Usage
 
 ### Update config.py

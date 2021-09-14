@@ -54,9 +54,12 @@ def main(cfg):
         logging.debug('Files only in Artifactory %s: %s', from_repo_key, artifactory_complement)
         logging.info('Number of files only in Artifactory %s: %s', from_repo_key, len(artifactory_complement))
 
-        failure_count, success_count = migrate(artifactory_complement, cfg.work_dir, from_repo_key, to_repo_key,
-                                               cfg.artifactory_spec, cfg.nexus_spec)
-        logging.info("%s -> %s, Success: %s, Failure: %s", from_repo_key, to_repo_key, success_count, failure_count)
+        if cfg.dry:
+            logging.info("Configured to run dry so not performing migration")
+        else:
+            failure_count, success_count = migrate(artifactory_complement, cfg.work_dir, from_repo_key, to_repo_key,
+                                                   cfg.artifactory_spec, cfg.nexus_spec)
+            logging.info('%s -> %s, Success: %s, Failure: %s', from_repo_key, to_repo_key, success_count, failure_count)
 
 
 if __name__ == '__main__':
