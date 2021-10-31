@@ -28,21 +28,21 @@ def is_later(current, candidate):
     return result
 
 
-def get_latest_repo_files(artifactory_spec, repo_key, excluded_uri_patterns=(r'.*maven-metadata.xml',)):
+def get_latest_repo_files(artifactory_spec, repo_key):
     file_content = [m for m in get_repo_content(artifactory_spec, repo_key)['files'] if not m['folder']]
     latest_dict = {}
     for m in file_content:
         group_artifact_version = dirname(m['uri'])
         file_name = basename(m['uri'])
         normalized_file_name = re.sub(r'-[0-9]{8}.[0-9]+-[0-9]+', '-SNAPSHOT', file_name)
-        if not any([re.fullmatch(p, normalized_file_name) for p in excluded_uri_patterns]):
-            key = '/'.join([group_artifact_version, normalized_file_name])[1:]
-            if key in latest_dict:
-                if is_later(basename(latest_dict[key]['uri']), file_name):
-                    logging.debug('Excluding %s for %s', latest_dict[key]['uri'], file_name)
-                    latest_dict[key] = m
-            else:
+        key = '/'.join([group_artifact_version, normalized_file_name])[1:]
+        if key in latest_dict:
+            if is_later(basename(latest_dict[key]['uri']), file_name):
+                logging.debug('Excluding %s for %s', latest_dict[key]['uri'], file_name)
                 latest_dict[key] = m
+        else:
+            latest_dict[key] = m
+
     return latest_dict
 
 

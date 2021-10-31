@@ -12,6 +12,7 @@ README.html
 /build
 /dist
 **/*egg-info
+**/*.log
 .coverage
 htmlcov/
 work_dir/

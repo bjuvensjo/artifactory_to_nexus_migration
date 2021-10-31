@@ -20,6 +20,8 @@ def get_assets(nexus_spec, repository):
     continuation_token = assets_page['continuationToken']
     items = assets_page['items']
     while continuation_token:
+        if len(items) % 500 == 0:
+            logging.info('Fetched %s Nexus assets and still more to fetch', len(items))
         assets_page = get_assets_page(nexus_spec, repository, continuation_token)
         continuation_token = assets_page['continuationToken']
         items += assets_page['items']
