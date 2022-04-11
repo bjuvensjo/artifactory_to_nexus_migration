@@ -8,14 +8,14 @@ logging.basicConfig(stream=stdout, level=logging.INFO)
 work_dir = './work_dir'
 dry = False
 
-artifactory_spec = {
+from_artifactory_spec = {
     'url': '<artifactory_url, e.g. http://artifactory_host:9001>',
     'username': '<username>',
     'password': '<password>'
 }
 
-nexus_spec = {
-    'url': '<nexus url, e.g. http://nexus_host:9002>',
+to_artifactory_spec = {
+    'url': '<artifactory_url, e.g. http://artifactory_host:9002>',
     'username': '<username>',
     'password': '<password>'
 }

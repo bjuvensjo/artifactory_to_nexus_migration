@@ -4,9 +4,9 @@ import logging
 import re
 from os.path import basename, dirname, exists
 
-from requests import get
+from requests import get, put
 
-from util import get_checksums, read_file
+from util import get_checksums, read_file, sha1sum
 
 
 def get_repo_content(artifactory_spec, repo_key):
@@ -46,10 +46,6 @@ def get_latest_repo_files(artifactory_spec, repo_key):
     return latest_dict
 
 
-def sha1sum(file_path):
-    return get_checksums(read_file(file_path))[1]
-
-
 def download(output_file, artifactory_spec, repo_key, repo_path, sha1):
     if exists(output_file) and sha1sum(output_file) == sha1:
         return
@@ -60,3 +56,27 @@ def download(output_file, artifactory_spec, repo_key, repo_path, sha1):
         if response.status_code != 200:
             raise OSError(f'{response.status_code}, {response.content}')
         f.write(response.content)
+
+
+def get_checksum_headers(md5, sha1, sha256):
+    return {
+        'X-Checksum-Md5': md5,
+        'X-Checksum-Sha1': sha1,
+        'X-Checksum-Sha256': sha256
+    }
+
+
+def upload(file_path, to_artifactory_spec, repo_key, repo_path):
+    content = read_file(file_path)
+    md5, sha1, sha256 = get_checksums(content)
+    headers = {
+        **get_checksum_headers(md5, sha1, sha256),
+        'Content-Type': 'application/octet-stream'
+    }
+    url = f'{to_artifactory_spec["url"]}/{repo_key}/{repo_path}'
+    logging.info('Uploading %s to %s', file_path, url)
+    response = put(url, data=content, headers=headers,
+                   auth=(to_artifactory_spec['username'], to_artifactory_spec['password']),
+                   verify=False)
+    if response.status_code != 201:
+        raise OSError(f'{response.status_code}, {response.content}')
