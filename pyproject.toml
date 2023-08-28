@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "artifactory-to-nexus-migration"
+version = "0.1.0"
+description = ""
+authors = ["John Smith <john@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+rich = "^12.6.0"
+requests = "^2.31.0"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.2.0"
+pytest-cov = "^4.1.0"
+coverage = "^6.5.0"
+flake8 = "^6.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.10.0"
+ipython = "^8.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests"    
+]
+pythonpath = "src"

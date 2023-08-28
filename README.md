@@ -33,5 +33,12 @@ actually downloading and uploading anything.
     
 ### Execute main.py
 
-    ./main.py
+Use Poetry 
+
+* to create virtual environment and install dependencies
+* to activate the virtual environment
+
+Within the activated virtual environment, execute
+
+    python main.py
 
