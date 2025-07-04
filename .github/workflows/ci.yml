@@ -11,4 +11,8 @@ on:
 
 jobs:
   build:
-    uses: bjuvensjo/.github/.github/workflows/python-poetry-ci.yml@main
+    uses: bjuvensjo/.github/.github/workflows/python-uv-ci.yml@main
+    with:
+      coverage_source: .
+      runs-on: '["ubuntu-latest"]'
+      version: '["3.13"]'
