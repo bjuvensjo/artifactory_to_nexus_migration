@@ -2,12 +2,12 @@ import logging
 from sys import stdout
 
 from filters import (
+    latest_version,
     not_index,
     not_maven_metadata,
     not_tar,
     not_war,
     not_zip,
-    latest_version,
 )
 
 logging.basicConfig(stream=stdout, level=logging.INFO)

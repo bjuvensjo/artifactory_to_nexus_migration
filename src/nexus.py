@@ -1,15 +1,13 @@
 import logging
 
-from requests import get, put
+from httpx import get, put
 
 from util import read_file
 
 
 def get_assets_page(nexus_spec, repository, continuation_token=None):
-    token_param = (
-        f"&continuationToken={continuation_token}" if continuation_token else ""
-    )
-    url = f'{nexus_spec["url"]}/service/rest/v1/assets?repository={repository}{token_param}'
+    token_param = f"&continuationToken={continuation_token}" if continuation_token else ""
+    url = f"{nexus_spec['url']}/service/rest/v1/assets?repository={repository}{token_param}"
     response = get(url, auth=(nexus_spec["username"], nexus_spec["password"]))
     if response.status_code != 200:
         raise OSError(f"{response.status_code}, {response.content}")
@@ -34,7 +32,7 @@ def get_latest_repo_files(nexus_spec, repo_key):
 
 
 def upload(file_path, nexus_spec, repo_key, repo_path):
-    url = f'{nexus_spec["url"]}/repository/{repo_key}/{repo_path}'
+    url = f"{nexus_spec['url']}/repository/{repo_key}/{repo_path}"
     logging.info("Uploading %s to %s", file_path, url)
     data = read_file(file_path)
     headers = {"Content-Type": "application/octet-stream"}

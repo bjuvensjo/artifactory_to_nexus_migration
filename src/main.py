@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import logging
 from os import makedirs, remove
 from os.path import dirname
@@ -68,9 +67,7 @@ def main(cfg):
 
         artifactory_files = get_artifactory_files(cfg.artifactory_spec, from_repo_key)
         logging.debug("Artifactory %s files: %s", from_repo_key, artifactory_files)
-        logging.info(
-            "Artifactory %s number of files: %s", from_repo_key, len(artifactory_files)
-        )
+        logging.info("Artifactory %s number of files: %s", from_repo_key, len(artifactory_files))
 
         filtered_artifactory_files = filter_repo_files(artifactory_files, cfg.filters)
         logging.debug("Artifactory %s files: %s", from_repo_key, artifactory_files)
@@ -85,9 +82,7 @@ def main(cfg):
         logging.info("Nexus %s number of files: %s", to_repo_key, len(nexus_files))
 
         artifactory_complement = get_complement(filtered_artifactory_files, nexus_files)
-        logging.debug(
-            "Files only in Artifactory %s: %s", from_repo_key, artifactory_complement
-        )
+        logging.debug("Files only in Artifactory %s: %s", from_repo_key, artifactory_complement)
         logging.info(
             "Number of files only in Artifactory %s: %s",
             from_repo_key,

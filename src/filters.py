@@ -38,9 +38,7 @@ def latest_version(repo_files):
                 get_latest_rc(v),
                 get_latest_fixed(v),
             ]
-            flat_latest_versions = [
-                item for sublist in latest_versions for item in sublist if item
-            ]
+            flat_latest_versions = [item for sublist in latest_versions for item in sublist if item]
             # latest_version_map[k] = [get_latest_snapshot(v), get_latest_rc(v), get_latest_fixed(v)]
             latest_version_map[k] = flat_latest_versions
         except ValueError:

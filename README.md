@@ -33,12 +33,12 @@ actually downloading and uploading anything.
     
 ### Execute main.py
 
-Use Poetry 
+Install uv:
 
-* to create virtual environment and install dependencies
-* to activate the virtual environment
+https://docs.astral.sh/uv/getting-started/installation/
 
-Within the activated virtual environment, execute
+## This repo/project
 
-    python main.py
+Use uv, to automatically create a virtual environment and run the script:
 
+	uv run src/main.py

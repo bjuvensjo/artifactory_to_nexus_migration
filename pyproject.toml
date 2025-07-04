@@ -1,35 +1,55 @@
-[tool.poetry]
+[project]
 name = "artifactory-to-nexus-migration"
-version = "0.1.0"
 description = ""
-authors = ["John Smith <john@example.com>"]
+version = "0.1.1"
+license = {text = "MIT License"}
+requires-python = ">=3.13"
+authors = [{name = "John Smith", email = "john@example.com"}]
 readme = "README.md"
+dependencies = [
+    "httpx>=0.28.1",
+    "rich>=14.0.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-rich = "^12.6.0"
-requests = "^2.31.0"
-
-
-[tool.poetry.group.test.dependencies]
-pytest = "^7.2.0"
-pytest-cov = "^4.1.0"
-coverage = "^6.5.0"
-flake8 = "^6.0.0"
-
-
-[tool.poetry.group.dev.dependencies]
-black = "^22.10.0"
-ipython = "^8.7.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.uv]
+dev-dependencies = [
+    "ipython>=9.4.0",
+    "pytest>=8.4.1",
+    "ruff>=0.12.2",
+]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra -q"
+addopts = "-ra -q -vvv"
 testpaths = [
     "tests"    
 ]
 pythonpath = "src"
+
+[tool.coverage.report]
+omit = [
+    "*/__init__.py",
+    "*/*/usage_example.py",
+    "*/*slask*.py",
+    "src/py_scripts/commands/cli.py",
+]
+
+exclude_also = [
+    'if self.debug:',
+    'if settings.DEBUG',
+    'raise AssertionError',
+    'raise NotImplementedError',
+    'if __name__ == .__main__.:',
+]
+
+[tool.ruff]
+target-version = "py313"
+
+# Set the maximum line length.
+line-length = 160
+
+[tool.ruff.lint]
+# Add the `line-too-long` rule to the enforced rule set. By default, Ruff omits rules that
+# overlap with the use of a formatter, like Black, but we can override this behavior by
+# explicitly adding the rule.
+extend-select = ["E501", "U", "I"]

@@ -41,30 +41,17 @@ def _get_max(versions):
     if "rc" not in max_version:
         return max_version
     else:
-        max_rc = max(
-            _get_rc_number(v)
-            for v in versions
-            if _get_version_number(v) == max_version_number
-        )
-        return next(
-            v
-            for v in versions
-            if _get_rc_number(v) == max_rc
-            and _get_version_number(v) == max_version_number
-        )
+        max_rc = max(_get_rc_number(v) for v in versions if _get_version_number(v) == max_version_number)
+        return next(v for v in versions if _get_rc_number(v) == max_rc and _get_version_number(v) == max_version_number)
 
 
 def get_latest_snapshot(versions):
     try:
-        filtered_versions = [
-            v for v in versions if "snapshot" in v.lower() and "rc" not in v.lower()
-        ]
+        filtered_versions = [v for v in versions if "snapshot" in v.lower() and "rc" not in v.lower()]
         max_version = _get_max(filtered_versions)
         return [max_version] if max_version else []
     except ValueError:
-        logging.warning(
-            "Versions are not semver - returning all versions: %s", filtered_versions
-        )
+        logging.warning("Versions are not semver - returning all versions: %s", filtered_versions)
         return filtered_versions
 
 
@@ -74,21 +61,15 @@ def get_latest_rc(versions):
         max_version = _get_max(filtered_versions)
         return [max_version] if max_version else []
     except ValueError:
-        logging.warning(
-            "Versions are not semver - returning all versions: %s", filtered_versions
-        )
+        logging.warning("Versions are not semver - returning all versions: %s", filtered_versions)
         return filtered_versions
 
 
 def get_latest_fixed(versions):
     try:
-        filtered_versions = [
-            v for v in versions if "rc" not in v.lower() and "snapshot" not in v.lower()
-        ]
+        filtered_versions = [v for v in versions if "rc" not in v.lower() and "snapshot" not in v.lower()]
         max_version = _get_max(filtered_versions)
         return [max_version] if max_version else []
     except ValueError:
-        logging.warning(
-            "Versions are not semver - returning all versions: %s", filtered_versions
-        )
+        logging.warning("Versions are not semver - returning all versions: %s", filtered_versions)
         return filtered_versions

@@ -3,16 +3,14 @@ import logging
 import re
 from os.path import basename, dirname, exists
 
-from requests import get
+from httpx import get
 
 from util import get_checksums, read_file
 
 
 def get_repo_content(artifactory_spec, repo_key):
-    url = f'{artifactory_spec["url"]}/api/storage/{repo_key}?list&deep=1&listFolders=1'
-    response = get(
-        url, auth=(artifactory_spec["username"], artifactory_spec["password"])
-    )
+    url = f"{artifactory_spec['url']}/api/storage/{repo_key}?list&deep=1&listFolders=1"
+    response = get(url, auth=(artifactory_spec["username"], artifactory_spec["password"]))
     if response.status_code != 200:
         raise OSError(f"{response.status_code}, {response.content}")
     return response.json()
@@ -30,11 +28,7 @@ def is_later(current, candidate):
 
 
 def get_latest_repo_files(artifactory_spec, repo_key):
-    file_content = [
-        m
-        for m in get_repo_content(artifactory_spec, repo_key)["files"]
-        if not m["folder"]
-    ]
+    file_content = [m for m in get_repo_content(artifactory_spec, repo_key)["files"] if not m["folder"]]
     latest_dict = {}
     for m in file_content:
         group_artifact_version = dirname(m["uri"])
@@ -58,12 +52,10 @@ def sha1sum(file_path):
 def download(output_file, artifactory_spec, repo_key, repo_path, sha1):
     if exists(output_file) and sha1sum(output_file) == sha1:
         return
-    url = f'{artifactory_spec["url"]}/{repo_key}/{repo_path}'
+    url = f"{artifactory_spec['url']}/{repo_key}/{repo_path}"
     logging.info("Downloading %s to %s", url, output_file)
     with open(output_file, "wb") as f:
-        response = get(
-            url, auth=(artifactory_spec["username"], artifactory_spec["password"])
-        )
+        response = get(url, auth=(artifactory_spec["username"], artifactory_spec["password"]))
         if response.status_code != 200:
             raise OSError(f"{response.status_code}, {response.content}")
         f.write(response.content)
